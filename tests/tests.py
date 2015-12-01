@@ -1,4 +1,5 @@
 from cms.api import add_plugin, create_page, publish_page
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.test import TestCase
 from django.test.client import Client
@@ -15,7 +16,7 @@ def _setup_testing_env(self):
     self.page = create_page('Test Page', 'test.html', 'en', slug='/',
                             created_by=self.testuser)
     placeholder = self.page.placeholders.get(slot='slot')
-    add_plugin(placeholder, 'NVD3CMSPlugin', 'en')
+    add_plugin(placeholder, 'MathJaxPlugin', 'en')
     publish_page(self.page, self.testuser, 'en')
     self.client = Client()
     self.response = self.client.get('/')
@@ -28,34 +29,32 @@ class RenderPluginTestCase(TestCase):
     urls = 'tests.urls'
 
     def setUp(self):
-
         # create a User
         self = _setup_testing_env(self)
 
     def test_simplemathjax(self):
         self.assertEqual(self.response.status_code, 200)
-        self.assertIn('cdn.mathjax.org', self.content)
+        self.assertIn(settings.MATHJAX_PATH[:15], self.content)
 
 
-@override_settings(MATHJAX_PATH = 'local', ROOT_URLCONF='tests.urls')
-class LocalNVD3PluginTestCase(TestCase):
+@override_settings(MATHJAX_PATH='local', ROOT_URLCONF='tests.urls')
+class LocalMathJaxTestCase(TestCase):
     urls = 'tests.urls'
 
     def setUp(self):
         self = _setup_testing_env(self)
 
     def test_localmathjax(self):
-        self.assertIn('MathJax.js', self.content)
+        self.assertIn(settings.MATHJAX_JS, self.content)
 
     def test_notcdn(self):
-        self.
+        self.assertNotIn(settings.MATHJAX_PATH[:15], self.content)
 
 
-
-
-@override_settings(ROOT_URLCONF='tests.urls', COMPRESS_ENABLED=True,
-                   CMSNVD3_D3JS_SOURCE='local', CMSNVD3_JS_SOURCE='local',
-                   CMSNVD3_CSS='local')
+@override_settings(ROOT_URLCONF='tests.urls',
+                   COMPRESS_ENABLED=True,
+                   MATHJAX_PATH='local',
+                   )
 class CompresslocalNVD3SRCS_TestCase(TestCase):
     urls = 'tests.urls'
 
