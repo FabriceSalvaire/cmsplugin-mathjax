@@ -13,9 +13,15 @@ class MathJaxPlugin(CMSPluginBase):
     render_template = "cms/plugins/mathjax.html"
 
     def render(self, context, instance, placeholder):
-
+        mathjax = settings.MATHJAX_PATH + settings.MATHJAX_JS
+        defaults = settings.MATHJAX_DEFAULT_CONFIG
+        if instance.config_file:
+            mathjax += '?config=' + instance.config_file
         context.update({
-            'mathjax': getattr(settings, 'MATHJAX_PATH', '//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML')
+            'mathjax': mathjax,
+            'use_sekizai': settings.MATHJAX_USE_SEKIZAI,
+            'config_data': instance.config_data,
+            'default_config': defaults
                         })
         return context
 

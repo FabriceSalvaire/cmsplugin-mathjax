@@ -1,8 +1,15 @@
-<html>
-  <head>
-    <title></title>
-    <meta content="">
-    <style></style>
-  </head>
-  <body></body>
-</html>
+{%if use_sekizai %}{%load sekizai_tags%}{%endif%}
+{%if use_sekizai %}
+{%addtoblock "js"%}
+{%if default_config%}<script type="text/javascript">{{default_config}}</script>{%endif%}
+{%if config_data%}<script type="text/javascript">{{config_data}}</script>{%endif%}
+<script type="text/javascript" src="{{mathjax}}"></script>
+{%endaddtoblock%}
+{%else%}
+<!-- dontusesekizaicomment just for testing...-->
+{%if default_config%}<script type="text/javascript">{{default_config}}</script>{%endif%}
+{%if config_data%}<script type="text/javascript">{{config_data}}</script>{%endif%}
+<script type="text/javascript" src="{{mathjax}}"></script>
+{%endif%}
+
+

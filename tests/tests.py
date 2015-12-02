@@ -15,8 +15,8 @@ def _setup_testing_env(self):
     # Every test needs a client.
     self.page = create_page('Test Page', 'test.html', 'en', slug='/',
                             created_by=self.testuser)
-    placeholder = self.page.placeholders.get(slot='slot')
-    add_plugin(placeholder, 'MathJaxPlugin', 'en')
+    self.placeholder = self.page.placeholders.get(slot='slot')
+    add_plugin(self.placeholder, 'MathJaxPlugin', 'en')
     publish_page(self.page, self.testuser, 'en')
     self.client = Client()
     self.response = self.client.get('/')
@@ -37,29 +37,40 @@ class RenderPluginTestCase(TestCase):
         self.assertIn(settings.MATHJAX_PATH[:15], self.content)
 
 
-@override_settings(MATHJAX_PATH='local', ROOT_URLCONF='tests.urls')
-class LocalMathJaxTestCase(TestCase):
+@override_settings(ROOT_URLCONF='tests.urls')
+class MathJaxConfigurationTestCase(TestCase):
     urls = 'tests.urls'
 
     def setUp(self):
         self = _setup_testing_env(self)
 
-    def test_localmathjax(self):
-        self.assertIn(settings.MATHJAX_JS, self.content)
+    def test_all_configurations(self):
+        for name in settings.MATHJAX_CONFIG_FILES:
+            add_plugin(self.placeholder, 'MathJaxPlugin',
+                       'en', config_file=name
+                       )
+            publish_page(self.page, self.testuser, 'en')
+            self.response = self.client.get('/')
+            self.content = str(self.response.content)
+            self.assertIn(name, self.content)
 
-    def test_notcdn(self):
-        self.assertNotIn(settings.MATHJAX_PATH[:15], self.content)
 
-
-@override_settings(ROOT_URLCONF='tests.urls',
-                   COMPRESS_ENABLED=True,
-                   MATHJAX_PATH='local',
-                   )
-class CompresslocalNVD3SRCS_TestCase(TestCase):
+@override_settings(ROOT_URLCONF='tests.urls', MATHJAX_USE_SEKIZAI=False)
+class MathJaxConfigurationTestCase(TestCase):
     urls = 'tests.urls'
 
     def setUp(self):
         self = _setup_testing_env(self)
 
-    def test_Sekizai_Compress(self):
-        self.assertEqual(self.response.status_code, 200)
+    def test_dontusesekizai(self):
+        self.assertIn('dontusesekizaicomment', self.content)
+
+    def test_all_configurations(self):
+        for name in settings.MATHJAX_CONFIG_FILES:
+            add_plugin(self.placeholder, 'MathJaxPlugin',
+                       'en', config_file=name
+                       )
+            publish_page(self.page, self.testuser, 'en')
+            self.response = self.client.get('/')
+            self.content = str(self.response.content)
+            self.assertIn(name, self.content)
