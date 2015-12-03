@@ -11,9 +11,10 @@ class MathJaxConfig(CMSPlugin):
     config_file = models.CharField(blank=True,
                                    verbose_name=_('Configuration preset'),
                                    choices=CHOICES,
-                                   max_length=100
+                                   max_length=100,
                                    )
     config_data = models.TextField(verbose_name=_("Configuration data"),
                                    blank=True,
                                    default=''
+                                   help_text=_("javascript code without javascirpt tags. See MathJax docs for details.")
                                    )

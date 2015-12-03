@@ -14,9 +14,9 @@ MATHJAX_USE_SEKIZAI = True
 
 # Presets for MathJax v. 2.6
 MATHJAX_CONFIG_FILES = ['TeX-AMS-MML_HTMLorMML',
-                      'TeX-AMS_HTML',
-                      'MML_HTMLorMML',
-                      'AM_HTMLorMML',
-                      'TeX-AMS-MML_SVG',
-                      'TeX-MML-AM_HTMLorMML'
-                      ]
+                        'TeX-AMS_HTML',
+                        'MML_HTMLorMML',
+                        'AM_HTMLorMML',
+                        'TeX-AMS-MML_SVG',
+                        'TeX-MML-AM_HTMLorMML'
+                        ]

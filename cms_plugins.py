@@ -11,6 +11,7 @@ class MathJaxPlugin(CMSPluginBase):
     model = MathJaxConfig
     name = _("Insert MathJax Sources")
     render_template = "cms/plugins/mathjax.html"
+    text_enabled = False
 
     def render(self, context, instance, placeholder):
         mathjax = settings.MATHJAX_PATH + settings.MATHJAX_JS
