@@ -1,0 +1,6 @@
+{
+    "package-name": "cmsplugin-mathjax",
+    "installed-apps": [
+	"cmsplugin_mathjax"
+    ]
+}

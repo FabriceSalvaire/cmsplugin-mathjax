@@ -1,0 +1,9 @@
+{%load sekizai_tags%}
+{% addtoblock "js" %}
+{% if inline_config %}
+<script type="text/x-mathjax-config">
+{{ inline_config }}
+</script>
+{% endif %}
+<script type="text/javascript" async src="{{ mathjax_url }}"></script>
+{% endaddtoblock %}
