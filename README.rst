@@ -31,8 +31,9 @@ Installation
 This plugin requires django CMS 3 or higher to be properly installed.
 
 * Within your ``virtualenv`` run ``pip install cmsplugin-mathjax``
-* Add ``'cmsplugin_mathjax'`` to your ``INSTALLED_APPS`` setting.
-* Run ``manage.py migrate cmsplugin_mathjax``.
+* Check you have ``'django_sekizai'`` in your ``INSTALLED_APPS`` setting
+* Add ``'cmsplugin_mathjax'`` to your ``INSTALLED_APPS`` setting
+* Run ``manage.py migrate cmsplugin_mathjax``
 
 Usage
 -----

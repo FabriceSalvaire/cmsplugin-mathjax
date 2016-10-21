@@ -5,6 +5,7 @@ from cmsplugin_mathjax import __version__
 
 REQUIREMENTS = [
     'django-cms>=3',
+    'django-sekizai',
 ]
 
 CLASSIFIERS = [
