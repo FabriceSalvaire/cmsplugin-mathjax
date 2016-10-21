@@ -15,6 +15,6 @@ class MathJaxConfig(CMSPlugin):
                                    )
     config_data = models.TextField(verbose_name=_("Configuration data"),
                                    blank=True,
-                                   default=''
+                                   default='',
                                    help_text=_("javascript code without javascirpt tags. See MathJax docs for details.")
                                    )
